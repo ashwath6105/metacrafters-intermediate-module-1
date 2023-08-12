@@ -1,6 +1,6 @@
 ## Functions and Errors - ETH + AVAX
 
-This code demonstrates a simple smart contract written in Solidity that utilizes the require(), assert(), and revert() statements.
+This is a simple solidity smart contract for demonstrating the use cases of require(), assert() and revert() statements.
 
 ## Description
 
