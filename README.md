@@ -4,23 +4,73 @@ This is a simple solidity smart contract for demonstrating the use cases of requ
 
 ## Description
 
-The contract SmartContract is designed to manage a minimum value requirement for transactions. It includes the following key components:
+The solidity contract StatementExamples provides a basic understanding of assert(), revert() and require() statements and thier implementation in a simple way by allowing owners to set a numerical value while enforcing ownership and non-zero value conditions.
 
-The owner variable stores the address of the contract owner and is set during contract deployment in the constructor.
+It showcases the use of require(), assert(), and revert() statements in the setValue, assertExample, and revertExample functions, respectively.
 
-The minValue variable represents the minimum value required for a transaction to be considered valid. It is initially set to 100.
+#### Constructor:
+```
+constructor() {
+    owner = msg.sender;
+    value = 0;
+}
 
-The updateMinValue() function allows the contract owner to update the minimum value. It takes a new value as a parameter and checks two conditions using the require() statement:
+```
+When the contract is deployed, this constructor is put to use. Two contract variables are initialised by it:
 
-The transaction sender must be the contract owner. If this condition is not met, the transaction reverts with an error message.
-The new value must be greater than 0. If this condition is not met, the transaction reverts with an error message.
-The transferWithMinValue() function enables transferring Ether to a specified recipient. It checks whether the amount being transferred is greater than or equal to the minValue using the assert() statement. If the condition is false, indicating that the transferred value is less than the minimum required, the transaction reverts.
+Owner: The account's allocated address is where the contract is deployed. The owner of the contract is regarded as being at this address.
+value: At first, it is initialised to 0.
 
-The exampleRevert() function serves as an illustration of the revert() statement. It demonstrates how to explicitly revert a transaction with a custom error message.
+#### setValue Function:
+```
+function setValue(uint256 data) external {
+    require(msg.sender == owner, "Only the owner can set the value");
+    require(data != 0, "Value cannot be zero");
+    value = data;
+}
 
-These statements are used to enhance the security and reliability of the smart contract. The require() statement helps ensure that specific conditions are met before proceeding with the transaction, such as ownership or valid input values. The assert() statement is employed for internal consistency checks that should never fail under normal circumstances, allowing for early detection of errors. Lastly, the revert() statement offers the ability to revert a transaction explicitly, typically used when certain conditions are not met or to provide custom error messages.
+```
+This function allows externals callers to set a value. The value variable is assigned said value.
+This function has 2 conditions:
+1. The caller has to be the 'owner'
+2. the amount to be set should be greater then zero.
 
-By using these statements judiciously, the contract can enforce conditions, validate inputs, and ensure the integrity of its state, contributing to the overall security and robustness of the smart contract.
+If both conditions are met, the value variable is updated with the value of data.
+
+#### assertExample Function:
+```
+function assertExample() external pure returns (uint256) {
+    uint256 x = 50;
+    uint256 y = 5;
+
+    assert(x >= y);
+
+    return x - y;
+}
+
+```
+
+This functions demonstartes the use case of assert() statement.
+It defines two local variables 'x' and 'y' and initalises and uses the assert() statement to m=ensure that 'x' is greater than or equal to 'y'. Then it returns the value of subtracting 'y' from 'x'.
+
+
+#### revertExample Function:
+```
+function revertExample(uint256 num) external pure returns (uint256) {
+    if (num == 0) {
+        revert("Cannot divide by zero");
+    }
+
+    return 100 / num;
+}
+
+```
+
+This function demonstrates the usage of the revert() statement. It takes an input parameter num and performs the following steps:
+
+If num is equal to zero, it reverts the transaction with the error message "Cannot divide by zero."
+Otherwise, it returns the result of dividing 100 by num.
+
 
 ## Getting Started
 
@@ -69,9 +119,10 @@ contract StatementExample {
     }
 }
 ```
-To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.0" (or another compatible version), and then click on the "Compile project.sol" button.
 
-Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar. Select the "project" contract from the dropdown menu, and then click on the "Deploy" button.
+To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.18" (or another compatible version), and then click on the "Compile functions_&_errors.sol" button.
+
+Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar. Select the "functions_&_errors" contract from the dropdown menu, and then click on the "Deploy" button.
 
 Confirm Contract Deployment: Once the deployment is successful, you will receive a transaction hash that represents the contract deployment transaction. You can use an Ethereum block explorer like Etherscan to search for the contract address associated with that transaction hash. This confirms that the contract is deployed on the Ethereum network.
 
