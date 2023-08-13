@@ -33,7 +33,7 @@ function setValue(uint256 data) external {
 This function allows externals callers to set a value. The value variable is assigned said value.
 This function has 2 conditions:
 1. The caller has to be the 'owner'
-2. the amount to be set should be greater then zero.
+2. the amount to be set connot be equal to zero.
 
 If both conditions are met, the value variable is updated with the value of data.
 
